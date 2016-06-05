@@ -1,15 +1,15 @@
 {
-  "type": "object",
-  "properties": {
-    "gitlabInstallation": {
-      "type": "string",
-      "title": "Gitlab url",
-     "default": "URL of the gitlab installation you want to use"
-   },
-    "privateToken": {
-      "type": "string",
-      "title": "Gitlab private token",
-      "default": "Get it from /profile/account in your installation"
+    "type": "object",
+    "properties": {
+        "gitlabInstallation": {
+            "type": "string",
+            "title": "Gitlab url",
+            "default": "URL of the gitlab installation you want to use"
+        },
+        "privateToken": {
+            "type": "string",
+            "title": "Gitlab private token",
+            "default": "Get it from /profile/account in your installation"
+        }
     }
-  }
 }
