@@ -24,7 +24,7 @@
         "url": "git+https://github.com/jf1603/hain-plugin-gitlab.git"
     },
     "bugs": {
-        "url": "https://github.com/jf1603/hain-plugin-gitlab/issues",
+        "url": "https://github.com/jf1603/hain-plugin-gitlab/issues"
     },
     "homepage": "https://github.com/jf1603/hain-plugin-gitlab#readme"
 }
