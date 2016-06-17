@@ -68,7 +68,7 @@ module.exports = (pluginContext) => {
                     var projectResponse = {
                         id: project.id,
                         title: project.name_with_namespace,
-                        desc: project.description,
+                        desc: project.description || '',
                         payload: {action:'open',url:project.web_url},
                         icon: project.avatar_url ? project.avatar_url + '?private_token=' + prefs.privateToken : "#fa fa-product-hunt"
                     };
