@@ -58,7 +58,6 @@ module.exports = (pluginContext) => {
                     title: project.name_with_namespace,
                     desc: project.description || '',
                     payload: {action:'open',url:project.web_url},
-                    preview: true,
                     icon: project.avatar_url ? project.avatar_url + '?private_token=' + prefs.privateToken : "#fa fa-product-hunt"
                 });
             });
