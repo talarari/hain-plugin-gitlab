@@ -37,7 +37,7 @@ module.exports = (pluginContext) => {
         pRes.add({
             id: FAKE,
             title: 'fetching...',
-            desc: 'from Gitlab',
+            desc: 'from ' + preferences.gitlabInstallation,
             icon: '#fa fa-spinner fa-spin'
         });
         client.projects.search({
