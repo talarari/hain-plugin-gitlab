@@ -14,7 +14,7 @@ module.exports = (pluginContext) => {
 
     const initClient = (prefs)=>{
         if (prefs.gitlabInstallation && prefs.privateToken){
-            client = gitlab.create({
+            client = gitlab.createPromise({
                 api: prefs.gitlabInstallation + '/api/v3',
                 privateToken: prefs.privateToken
             });
@@ -47,41 +47,31 @@ module.exports = (pluginContext) => {
             desc: 'from ' + prefs.gitlabInstallation,
             icon: '#fa fa-spinner fa-spin'
         });
+
         client.projects.search({
             query: pSearchString
-        }, function(err, projects) {
+        }).then((projects)=> {
             pRes.remove(FAKE);
-
-            if (err){
+            projects.forEach(project=>{
                 pRes.add({
-                    id: FAKE,
-                    title: "Oops, could'nt get your results",
-                    desc: "Make sure plugin preferences are correct, Click here to check",
-                    icon :"#fa fa-exclamation-circle",
-                    payload:{action:'prefs'}
+                    id: project.id,
+                    title: project.name_with_namespace,
+                    desc: project.description || '',
+                    payload: {action:'open',url:project.web_url},
+                    preview: true,
+                    icon: project.avatar_url ? project.avatar_url + '?private_token=' + prefs.privateToken : "#fa fa-product-hunt"
                 });
-                return;
-            }
-            if (projects) {
-                for (var i = 0; i < projects.length; i++) {
-                    const project = projects[i];
-                    var projectResponse = {
-                        id: project.id,
-                        title: project.name_with_namespace,
-                        desc: project.description || '',
-                        payload: {action:'open',url:project.web_url},
-                        icon: project.avatar_url ? project.avatar_url + '?private_token=' + prefs.privateToken : "#fa fa-product-hunt"
-                    };
-                    pRes.add(projectResponse);
-                }
-            } else {
-                pRes.add({
-                    id: FAKE,
-                    payload: undefined,
-                    title: "No project found matching your criteria: '" + pSearchString + "'",
-                    desc: "Try again with another search."
-                });
-            }
+            });
+        })
+        .catch(err=>{
+            pRes.remove(FAKE);
+            pRes.add({
+                id: FAKE,
+                title: "Oops, could'nt get your results",
+                desc: "Make sure plugin preferences are correct, Click here to check",
+                icon :"#fa fa-exclamation-circle",
+                payload:{action:'prefs'}
+            });
         });
     }
 
